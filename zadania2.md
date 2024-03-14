@@ -10,5 +10,3 @@
    funkcję, która zwróci znak pochodnej *f'* w punkcie. Obliczanie wartości
    funkcji *f* zrealizuj funkcją wpisaną "na twardo" w implementację metody
    Newtona.
-7. Zmodyfikuj kod z poprzedniego zadania tak, aby funkcja, której miejsce zerowe
-   przybliżamy, była przekazywana w parametrze.
