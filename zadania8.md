@@ -13,7 +13,7 @@ fn main() {
     p2.finish();
     println!("{}", !(p1 == p2));
     println!("{}", !(p1 == p4));
-    println!("{}", !(p3.len() == 3));
+    println!("{}", p3.len() == 3);
     for process in p3 {
         println!("{}: {}", process.pid, process.command);
     }
