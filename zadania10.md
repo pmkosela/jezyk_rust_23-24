@@ -19,7 +19,7 @@
 4. Stwórz strukturę `Deck`, będącą kontenerem, początkowo przechowującym
    wszystkie 54 karty (4 figury + 9 blotek = 13, każda w jednym z czterech
            kolorów). Zaimplementuj metody:
-   - `draw() -> Card`, losującą bez zwracania,
+   - `draw() -> Option<Card>`, losującą bez zwracania,
    - `len() -> usize`, zwracającą liczbę pozostałych kart.
 
 5. Z typów `Color`, `Value`, `Card` utwórz moduł `playing_cards`.
