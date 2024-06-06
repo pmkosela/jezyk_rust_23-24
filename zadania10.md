@@ -1,31 +1,81 @@
-1. Tradycyjne karty do gry (brydż, poker itd.) podzielone są na kolory o
-   nazwach:
-    - pik,
-    - kier,
-    - karo,
-    - trefl.
+1. Utwórz projekt biblioteczny, zawierający moduł `fraction`, który
+   implementuje typ `Fraction`, reprezentujący ułamek zwykły.
 
-    Zaprojektuj typ wyliczeniowy `Color`, który będzie mógł reprezentować dane
-    o kolorze z dodatkowym warunkiem, że są one uporządkowane jak w brydżu
-    (zgodnie z wypunktowaniem powyżej, gdzie są podane malejąco).
+2. Zaimplementuj dla typu `Fraction`:
+ - konstruktor,
+ - `as_f64, nominator, denumerator`
 
-2. Zaprojektuj typ wyliczeniowy `Value`, reprezentujący tradycyjną kartę do
-   gry, tzn. będącą numerem od 2 do 10 lub jedną z figur A as, K król, Q dama,
-   J walet.
+3. Zaimplementuj cechy, umożliwiające korzystanie z operatorów: `+ - * / += -=
+   *= /= == !=`.
 
-3. Stwórz strukturę `Card`, zawierającą pola o typach `Color` i `Value`.
-   Zaimplementuj dla niej cechę `fmt::Display`.
+4. Zaimplementuj cechę `From` dla typu *&str*.
 
-4. Stwórz strukturę `Deck`, będącą kontenerem, początkowo przechowującym
-   wszystkie 52 karty (4 figury + 9 blotek = 13, każda w jednym z czterech
-           kolorów). Zaimplementuj metody:
-   - `draw() -> Option<Card>`, losującą bez zwracania,
-   - `len() -> usize`, zwracającą liczbę pozostałych kart.
+5. Stwórz podmoduł testowy, sprawdzający działanie typu `Fraction`.
+<details>
+<summary>Przykładowe testy.</summary>
 
-5. Z typów `Color`, `Value`, `Card` utwórz moduł `playing_cards`.
+```
+#[cfg(test)]
+mod tests {
+    use super::*;
 
-6. W module nadrzędnym stwórz strukturę `Player`, przechowującą 13 kart. W
-   konstruktorze `fn from_deck(&mut Deck)` pobierz 13 kart z talii przekazanej
-   w parametrze.
+    #[test]
+    fn test_as_f64() {
+        let u1 = Ulamek::new(3, 4);
+        assert_eq!(u1.as_f64(), 0.75);
+    }
 
-7. Zaimplementuj metodę `Deck::shuffle(&mut self)`.
+    #[test]
+    fn test_add() {
+        let u1 = Ulamek::new(1, 3);
+        let u2 = Ulamek::new(1, 2);
+        assert_eq!(u1 + u2, Ulamek::new(5, 6));
+    }
+
+    #[test]
+    #[should_panic]
+    fn test_zerowy_mianownik() {
+        let _ = Ulamek::new(1, 0);
+    }
+
+    #[test]
+    fn test_rozne_zapisy_tego_samego_ulamka() {
+        assert_eq!(Ulamek::new(1, -3), Ulamek::new(-2, 6));
+    }
+
+    #[test]
+    fn test_z_napisu_1() {
+        let u1 = Ulamek::from_str("1/-3").unwrap();
+        let u2 = Ulamek::from_str("-2/6").unwrap();
+        assert_eq!(u1, u2);
+        assert_eq!(u1, Ulamek::new(-1, 3));
+    }
+
+    #[test]
+    fn test_z_napisu_2() {
+        let u1 = Ulamek::from_str("13").unwrap();
+        let u2 = Ulamek::from_str("-26/-2").unwrap();
+        assert_eq!(u1, u2);
+        assert_eq!(u1, Ulamek::new(13, 1));
+    }
+
+    #[test]
+    #[should_panic]
+    fn test_z_blednego_napisu_1() {
+        let _ = Ulamek::from_str("x/-3").unwrap();
+    }
+
+    #[test]
+    #[should_panic]
+    fn test_z_blednego_napisu_2() {
+        let _ = Ulamek::from_str("1/3/5").unwrap();
+    }
+
+    #[test]
+    #[should_panic]
+    fn test_z_blednego_napisu_3() {
+        let _ = Ulamek::from_str("/5").unwrap();
+    }
+}
+```
+</details>
