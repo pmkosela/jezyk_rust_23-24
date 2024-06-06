@@ -3,7 +3,7 @@
 
 2. Zaimplementuj dla typu `Fraction`:
  - konstruktor,
- - `as_f64, nominator, denumerator`
+ - `as_f64, numerator, denominator`
 
 3. Zaimplementuj cechy, umożliwiające korzystanie z operatorów: `+ - * / += -=
    *= /= == !=`.
