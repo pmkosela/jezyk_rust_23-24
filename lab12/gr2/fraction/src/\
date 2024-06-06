@@ -1,0 +1,67 @@
+use std::ops::{Mul, MulAssign};
+
+pub struct Fraction {
+    numerator: u32,
+    denominator: u32
+}
+
+impl Fraction {
+    pub fn new(numerator: u32, denominator: u32) -> Fraction {
+        Fraction{numerator, denominator}
+    }
+
+    pub fn numerator(&self) -> u32 {
+        self.numerator
+    }
+
+    pub fn denominator(&self) -> u32 {
+        self.denominator
+    }
+
+    pub fn as_f64(&self) -> f64 {
+        self.numerator as f64 / self.denominator as f64
+    }
+
+    fn gcd(a: u32, b: u32) -> u32 {
+        let mut a = a;
+        let mut b = b;
+        while b > 0 {
+            let tmp = a;
+            a = b;
+            b = a % b;
+        }
+    }
+}
+
+// operator*
+impl Mul for Fraction {
+    type Output = Self;
+
+    //fn mul(self, other: Fraction) -> <Self as Mul<fraction::Fraction>>::Output {
+    fn mul(self, other: Fraction) -> Self {
+        let numerator = self.numerator * other.numerator;
+        let denominator = self.denominator * other.denominator;
+        Fraction::new(numerator, denominator)
+    }
+}
+
+// operator*=
+impl MulAssign for Fraction {
+    fn mul_assign(&mut self, other: Fraction) {
+        self.numerator *= other.numerator;
+        self.denominator *= other.denominator;
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn create() {
+        let t = Fraction::new(1, 2);
+        assert_eq!(t.numerator, 1);
+        assert_eq!(t.denominator, 2);
+        assert_eq!(t.as_f64(), 0.5);
+    }
+}
